@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ImageResizer.Plugins.RemoteReader</id>
+    <version>3.2.4</version>
+    <title>ImageResizer.Plugins.RemoteReader - Resize and process images located on other servers or websites</title>
+    <authors>Nathanael Jones</authors>
+    <owners>Nathanael Jones</owners>
+    <licenseUrl>http://imageresizing.net/licenses/trial</licenseUrl>
+    <projectUrl>http://imageresizing.net/</projectUrl>
+    <iconUrl>http://imageresizing.net/images/logos/ImageIconPSD100.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>The RemoteReader plugin allows the ImageResizer to resize and display images that are located at arbitrary URLs. Kind of like a resizing relay.
+
+There are 3 layers of security to prevent abuse. 
+
+1. The API signs the remote url with HMAC SHA-256 to prevent anyone from tampering or generating them without access to the signing key.
+2. A whitelist approach is taken to sites. By default, no sites are allowed. You must handle the RemoteReaderPlugin.Current.AllowRemoteRequest event to permit sites (or portions of sites) to be relayed.
+4. The  plugin requires that all remote images be decoded and re-encoded. Files are never returned as-is. This ensures that the files are valid images, and prevents XSS attacks.
+
+Please note, you must configure the &lt;remotereader signingKey="to a long and secure pass phrase" /&gt; and set &lt;remotereader allowAllSignedRequests="true" /&gt; if all code calling RemoteReaderPlugin.Current.CreateSignedUrl(remoteUrl,settings) is trusted.
+Visit http://imageresizing.net for details, documenation, and free support. 
+E-mail support@imageresizing.net if you encounter any problems with the software. 
+The documentation for this plugin resides at http://imageresizing.net/plugins/remotereader</description>
+    <tags>ImageResizer ImageResizing.Net Resize Resizer Resizing Crop Cropper Cropping automatic jCrop asp:Image Photo Image Rotate Flip Drawing System.Drawing WIC WPF disk caching jpeg jpg gif png ASP.NET MVC IIS transparency octree quanitization animated gifs dithering Gaussian blur sharpen sharpening radius contrast saturation hue brightness histogram sepia grayscale invert color pixel shader plugins noise removal exif rotation autorotate azure azurereader worker blob blobstore zip batch compress cache-control expires amazon cloudfront s3 quality format drop shadow 404 handling url rewriting gradient freeimage CatmullRom Lanczos3 bspline box bicubic bilinear CRW CR2 NEF RAF DNG MOS KDC DCR redirect actionresult routing logging nlog psd remote download webclient virtual path provider virtualpathprovider CAIR seam carving content aware image resizing alpha channel y ry ntsc bt709 flat size limit sizelimiting getthumbnailimage bitmap SQL database query watermark folder text overlay whitespace trimming product images thumbnails padding pad margin borders background bgcolor InterpolationMode Fant wic IWICBitmap IWICBitmapSource</tags>
+    <dependencies>
+      <dependency id="ImageResizer" />
+    </dependencies>
+  </metadata>
+</package>

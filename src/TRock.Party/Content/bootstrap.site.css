@@ -1,0 +1,22 @@
+﻿/* Jumbotrons
+-------------------------------------------------- */
+
+.jumbotron {
+    background: -moz-linear-gradient(45deg, #1581B7 0%, #1BA1E2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#1581B7), color-stop(100%,#1BA1E2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg, #1581B7 0%,#1BA1E2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg, #1581B7 0%,#1BA1E2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg, #1581B7 0%,#1BA1E2 100%); /* IE10+ */
+    background: linear-gradient(45deg, #1581B7 0%,#1BA1E2 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1581B7', endColorstr='#1BA1E2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+
+.element:hover {
+    border-color: #1BA1E2;
+}
+
+
+.element a img {
+    background: #1BA1E2;
+}

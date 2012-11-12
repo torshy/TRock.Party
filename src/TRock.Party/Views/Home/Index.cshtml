@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Welcome to the p4rty</h1>
+    <p>a music democracy</p>
+    <div style="font-size: 36px;">
+        <i class="icon-white icon-search"></i>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="container"></div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="well-small">
+                <div style="font-size: 24px;">
+                    <i class="icon-tag"> Top styles</i>
+                </div>
+            </div>
+            <div id="terms" class="btn-group" style="max-width: 100%; white-space: normal;" data-toggle="buttons-checkbox">
+            </div>
+        </div>
+        <div class="span6">
+            <div class="well-small">
+                <div style="font-size: 24px;">
+                    <i class="icon-heart"> Top Moods</i>
+                </div>
+            </div>
+            <div id="moods" class="btn-group" style="max-width: 100%; white-space: normal;" data-toggle="buttons-checkbox">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loading" class="centered" style="display: none;">
+    <div class="loading-circle"></div>
+    <div class="loading-inner-circle"></div>
+</div>
+
+@section scripts
+{
+    <script>
+        var myNest = nest.nest("RJOXXESVUVZ07WY1T");
+        var artist = myNest.artist();
+
+        $(function () {
+            $("#loading").show();
+
+            fillWithTopHotArtists();
+
+            artist.top_terms({ results: 75, type: 'style' }, function (err, results) {
+                if (err) {
+                    console.error("there was an error...");
+                    return;
+                }
+
+                var termList = results.terms.map(function (term) { return term.name; }).sort();
+
+                $.each(termList, function (index, value) {
+                    $("#terms").append("<button type=button class='btn btn-link'>" + value + "</button>");
+                });
+            });
+
+            artist.top_terms({ results: 75, type: 'mood' }, function (err, results) {
+                if (err) {
+                    console.error("there was an error...");
+                    return;
+                }
+
+                var termList = results.terms.map(function (term) { return term.name; }).sort();
+
+                $.each(termList, function (index, value) {
+                    $("#moods").append("<button type=button class='btn btn-link'>" + value + "</button>");
+                });
+            });
+
+            $("#terms button").live("click", function () {
+                $(this).toggleClass("btn-success");
+                fetchArtistByTerms();
+            });
+
+            $("#moods button").live("click", function () {
+                $(this).toggleClass("btn-success");
+                fetchArtistByTerms();
+            });
+        });
+
+        function fetchArtistByTerms() {
+            $("#loading").show();
+
+            var genres = $("#terms button[class*=active]").toArray().map(function (d) { return d.textContent; });
+            var moods = $("#moods button[class*=active]").toArray().map(function (d) { return d.textContent; });
+
+            if (genres.length == 0 && moods.length == 0) {
+                fillWithTopHotArtists();
+                $("#loading").hide();
+                return;
+            }
+
+            artist.search({ start: 0, results: 20, style: genres, mood: moods, bucket: ["images", "hotttnesss"] }, function (err, results) {
+                if (err) {
+                    console.error("there was an error...");
+                    return;
+                }
+
+                var $container = $('#container');
+                var $elements = $container.data('isotope').$filteredAtoms.filter(function (i) {
+                    return true;
+                });
+
+                $container.isotope('remove', $elements, function () { });
+
+                $.each(results.artists, function (index, a) {
+                    var item = getTile(a, index);
+                    $container.isotope('insert', item);
+                });
+
+                $("#loading").hide();
+            });
+        }
+
+        function fillWithTopHotArtists() {
+            artist.top_hottt({ start: 0, results: 20, bucket: ["images", "hotttnesss"] }, function (err, results) {
+                if (err) {
+                    console.error("there was an error...");
+                    return;
+                }
+
+                $.each(results.artists, function (index, a) {
+                    var item = getTile(a, index);
+                    $("#container").append(item);
+                });
+
+                $('#container').isotope({
+                    masonry: {
+                        columnWidth: 128,
+                        rowHeight: 128
+                    }
+                });
+
+                $("#loading").hide();
+            });
+        }
+
+        function getTile(artist, index) {
+            var randomnumber = Math.floor(Math.random() * 5);
+            var large = index % randomnumber == 0;
+            var size = large ? 252 : 124;
+
+            var item = $("<div class='element'></div>");
+            var link = $("<a href='/Home/Search?query=" + artist.name + "'></a>");
+            var caption = $("<div class='caption'>" + "   <h2>" + (1 + index) + ". " + artist.name + "</h2>" + "</div>");
+
+            if (artist.images.length > 0) {
+                var image = $("<img src='/api/imageresize/resize?url=" + artist.images[0].url + "&maxwidth=" + size + "&maxheight=" + size + "&mode=crop&format=jpg' alt='" + artist.name + "'></img>");
+                link.append(image);
+            }
+
+            item.append(link);
+            item.append(caption);
+
+            if (large) {
+                item.toggleClass("width2").toggleClass("height2");
+            }
+
+            return item;
+        }
+    </script>
+}

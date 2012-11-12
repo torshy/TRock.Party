@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>SignalR.AutoFac</id>
+    <version>0.5.3.1</version>
+    <title />
+    <authors>Christian Weyer, Piotr Szmyd</authors>
+    <owners>Christian Weyer, Piotr Szmyd</owners>
+    <projectUrl>https://github.com/thinktecture/SignalR.Autofac</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SignalR dependency resolver binding to Autofac.</description>
+    <summary>SignalR dependency resolver binding to Autofac.</summary>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Autofac" version="2.6.3.862" />
+        <dependency id="SignalR" version="0.5.3" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
